@@ -29,6 +29,40 @@ through until AWS officially supports SQS as an event source.
 
 You now have a service that can instantly handle the queue and infinitely scale.
 
+### fleet Service files
+
+Since we are already building the main Dockerfile, you only have to build the 
+`Dockerfile.lambda`.
+
+`lambda-queue-worker@.service`:
+
+```
+[Unit]
+Description=lambda-queue-worker
+
+[Service]
+User=core
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker pull your-registry/your-lambda-function
+ExecStartPre=-/usr/bin/docker pull pebbletech/lambda-queue-worker
+ExecStartPre=-/usr/bin/docker kill sqs-to-lambda
+ExecStartPre=-/usr/bin/docker rm sqs-to-lambda
+ExecStartPre=-/bin/sh -c "/usr/bin/docker run --rm --name your-lambda-function --env-file=.env your-registry/your-lambda-function"
+EnvironmentFile=/etc/environment
+ExecStart=/bin/sh -c "/usr/bin/docker run --rm --name sqs-to-lambda --env-file=.env pebbletech/lambda-queue-worker:latest"
+ExecStop=/usr/bin/docker stop sqs-to-lambda
+```
+
+### Development testing
+
+Install `npm install -g git+https://git@github.com/deviavir/node-lambda#vpc-config-support`
+locally, you can then adjust the `event.json` with how you expect your event to
+arrive at your Lambda function.
+
+You can test your function by running `node-lambda run` in your project
+directory.
+
 ## Cost
 
 Depending on the amount of time your finished lambda function needs to process

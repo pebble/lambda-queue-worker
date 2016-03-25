@@ -2,7 +2,7 @@ FROM iojs:1.8.1-slim
 
 # Install git
 RUN apt-get update \
-  && apt-get install -qy git python build-essential \
+  && apt-get install -qy git python zip rsync build-essential \
   && rm -rf /var/lib/apt/lists/*
 
 # Install node modules
