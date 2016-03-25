@@ -1,4 +1,4 @@
-FROM iojs:1.8.1-slim
+FROM node:5.9.1-slim
 
 # Install git
 RUN apt-get update \
@@ -16,5 +16,4 @@ WORKDIR /app
 ENV HOME /app
 
 # Default command to run on boot
-# ENTRYPOINT []
 CMD sqs-to-lambda

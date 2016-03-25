@@ -54,6 +54,80 @@ ExecStart=/bin/sh -c "/usr/bin/docker run --rm --name sqs-to-lambda --env-file=.
 ExecStop=/usr/bin/docker stop sqs-to-lambda
 ```
 
+### Role
+
+Your instance role will have to allow a few things to continue.
+
+#### Instance role
+
+```
+{
+    "Statement": [
+        {
+            "Resource": "*",
+            "Action": [
+                "lambda:CreateAlias",
+                "lambda:CreateFunction",
+                "lambda:ListFunctions",
+                "lambda:UpdateFunctionCode",
+                "lambda:UpdateFunctionConfiguration",
+                "lambda:UpdateAlias",
+                "lambda:PublishVersion",
+                "lambda:GetFunction",
+                "iam:PassRole",
+	            "ec2:DescribeSecurityGroups",
+                "ec2:DescribeSubnets"
+            ],
+            "Effect": "Allow"
+        },
+        {
+            "Resource": "arn:aws:logs:*:*:*",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Effect": "Allow"
+        },
+        {
+            "Resource": "*",
+            "Action": [
+                "ec2:CreateNetworkInterface",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:DetachNetworkInterface",
+                "ec2:DeleteNetworkInterface"
+            ],
+            "Effect": "Allow"
+        }
+    ],
+    "Version": "2012-10-17"
+}
+```
+
+#### Trust Relationship role
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    },
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
+
 ### Development testing
 
 Install `npm install -g git+https://git@github.com/deviavir/node-lambda#vpc-config-support`
