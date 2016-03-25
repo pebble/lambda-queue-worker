@@ -74,11 +74,18 @@ Your instance role will have to allow a few things to continue.
                 "lambda:UpdateAlias",
                 "lambda:PublishVersion",
                 "lambda:GetFunction",
-                "iam:PassRole",
+                "lambda:InvokeFunction",
 	            "ec2:DescribeSecurityGroups",
                 "ec2:DescribeSubnets"
             ],
             "Effect": "Allow"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:PassRole"
+            ],
+            "Resource": "arn:aws:iam::000000000000:role/Role"
         },
         {
             "Resource": "arn:aws:logs:*:*:*",
