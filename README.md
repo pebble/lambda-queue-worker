@@ -7,6 +7,10 @@ handling your queue at times.
 
 ## Usage
 
+Please note that you will have to launch both of the Dockers on one instance,
+and then keep that instance running to make sure the queue items reach the 
+lambda functions.
+
 Make sure to set and pass all the environment variables found in `.env`.
 
 Create the `Dockerfile.lambda` first, so you have a function deployed
