@@ -1,5 +1,9 @@
 # lambda-queue-worker
 
+This is a template that can be used to create an infinitely scalable SQS queue
+worker! It is expecting you to use NodeJS. The index.js currently only logs
+outputs.
+
 The dockers created with the files found in this directory allow you to easily
 create lambda queue workers. This gives you infinite scalability and lower
 costs than having to constantly be running machines that may or may not be
