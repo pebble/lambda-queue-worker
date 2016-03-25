@@ -1,0 +1,19 @@
+FROM iojs:1.8.1-slim
+
+# Install git
+RUN apt-get update \
+  && apt-get install -qy git python build-essential \
+  && rm -rf /var/lib/apt/lists/*
+
+# Install node modules
+RUN npm install -g git+https://git@github.com/deviavir/node-lambda#vpc-config-support
+
+# Setup user
+RUN useradd -g daemon -m -d /app app
+RUN chown -R app /app
+USER app
+ADD . /app
+WORKDIR /app
+ENV HOME /app
+
+CMD node-lambda deploy

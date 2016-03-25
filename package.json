@@ -1,0 +1,19 @@
+{
+  "name": "lambda-queue-worker",
+  "version": "1.0.0",
+  "description": "Lambda enabled queue worker.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pebble/lambda-queue-worker.git"
+  },
+  "author": "Pebble",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pebble/lambda-queue-worker/issues"
+  },
+  "homepage": "https://github.com/pebble/lambda-queue-worker#readme"
+}
