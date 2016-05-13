@@ -6,7 +6,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 # Install node modules
-RUN npm install -g git+https://git@github.com/deviavir/node-lambda#vpc-config-support
+RUN npm install -g node-lambda
 
 # Setup user
 RUN useradd -g daemon -m -d /app app
