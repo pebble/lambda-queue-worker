@@ -1,4 +1,4 @@
-FROM node:5.9.1-slim
+FROM node:6-slim
 
 # Install git
 RUN apt-get update \
